@@ -1,1 +1,36 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Terraform Plan') {
+            when {
+                expression {
+                    env.CHANGE_ID != null
+                }
+            }
+            steps {
+                script {
+                    
+                    sh 'terraform init'
+                    sh 'terraform plan'
+                }
+            }
+        }
+        stage('Terraform Apply') {
+            when {
+                branch 'main'
+            }
+            steps {
+                script {
+                    sh 'terraform init'
+                    sh 'terraform apply -auto-approve'
+                }
+            }
+        }
+    }
+}
 
