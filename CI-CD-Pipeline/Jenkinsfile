@@ -1,3 +1,6 @@
+
+//in jenkins pipeline job need do define webhook to get trigger from github in every pull request on main branch.
+
 pipeline {
     agent any
     stages {
